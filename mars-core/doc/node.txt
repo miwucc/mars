@@ -1,0 +1,43 @@
+mars 系统节点布置说明
+
+|- mars.root //mars系统根节点名称，一般为使用本框架的项目名称，如miner
+ |- mars.server //mars系统服务器管理目录，本目录固定名称为server node
+  |- mars.server.type //mars系统服务器类型目录，中心服使用CENTER，数据服使用DATA，游戏服使用GAME，公共服使用PUBLIC
+   |- mars.server.number //指定类型下服务器编号
+     - server info //服务器信息，包含服务器名称，TCP地址:端口,HTTP地址:端口，RPC服务地址:端口
+ |- mars.rpc //mars 系统rpc服务管理
+ ...
+
+示例:
+|-miner
+ |-server node
+   |-CENTER
+     |-C1
+     |-C2
+   |-DATA
+     |-D1
+     |-D2
+   |-GAME
+     |-G1
+     |-G2
+ |-thrift
+   ...
+
+考虑使用如下格式配置文件
+ServerInfo:{
+    number:1
+	name:"game node 1"
+	tcp:"192.168.2.21:9001"
+	http:"192.168.2.21:8081"
+    rpc:"192.168.2.21:9101"
+}
+
+
+
+
+
+
+
+
+
+

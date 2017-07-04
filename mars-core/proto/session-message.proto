@@ -1,0 +1,39 @@
+package com.tsixi.mars.cluster.pb;
+
+option java_outer_classname = "SessionMessage";
+
+/**
+ * 基础PB协议配置文件，协议格式如下
+ *	
+ * message_type 指定消息类型，便于消息分类，后续消息定义时应该将不同的消息大类分布到不同的文件中
+ * cmd 消息命令字，基于消息大类后的子消息命令字，使用可选字段，在没有时可以不使用
+ * data_message 具体消息序列，将具体的消息转成序列后设置到基础消息中进行传送
+ *
+ * 考虑在本文件中进行消息的完整描述，与方便程序中进行消息分类与处理，我们在每个具体消息结构中包含消息的分类与命令字，使用默认值的
+ * 方式提前设置在消息中，后续在程序中不用去设置他，这样在pb进行编码压缩处理后不会增加额外的字节。
+ * 
+ *
+ * message_type 消息分类1-100数字留做底层使用，上层消息分类使用100以后数字
+ * cmd 命令字1-100数字留做底层使用，上层消息命令字请从100以后开始
+ *
+ * protoc --java_out=./src/main/java base-message.proto
+ * getMessageType
+ */
+
+message Address {
+    required string host = 1;
+    required fixed32 port = 2;
+}
+
+message SessionEnter {
+    optional fixed32 message_type = 1 [default = 9];
+    optional fixed32 cmd = 2 [default = 1];
+    required string sessionId = 3;
+    required Address address = 4;
+}
+
+message SessionQuit {
+    optional fixed32 message_type = 1 [default = 9];
+    optional fixed32 cmd = 2 [default = 2];
+    required string sessionId = 3;
+}
